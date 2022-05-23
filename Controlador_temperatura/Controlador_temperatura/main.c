@@ -11,8 +11,6 @@
 #include <avr/interrupt.h>
 
 
-
-
 /********MACROS********/
 #define PID_KP  0.37558
 #define PID_KI  0.04983
@@ -22,12 +20,19 @@
 #define TMUESTREO 0.1
 /***********************/
 
-char cadena[20];
-char cadena1[20];
+//Recepcion Serial
+char serial_buffer[10];
+char serial_data_recieve[10];
+
+//Envio Serial
 char serial_data[20];
 
+
+char temperatura_str[20];
+char setpoint_str[20];
 float temperatura = 0;
 float U = 0;
+
 //Temperatura de referencia(No colocar entre 50 y 400)
 float referencia = 400;
 
@@ -65,13 +70,13 @@ int main(void){
 		 //Lee la temperatura	
 		 temperatura = Analogic_Read(ADC0D)*500.0/1024.0;
 		 //Convierte a cadena
-		 sprintf(cadena1,"SetPoint: %.0f\r ",referencia); 
-		 sprintf(cadena,"T: %.0f\r     ",temperatura);
+		 sprintf(setpoint_str,"SetPoint: %.0f\r ",referencia); 
+		 sprintf(temperatura_str,"T: %.0f\r     ",temperatura);
 		 
 		 Set_Cursor(1,1);
-		 LCD_String(cadena1);
+		 LCD_String(setpoint_str);
 		 Set_Cursor(2,1);
-		 LCD_String(cadena);
+		 LCD_String(temperatura_str);
     }
 }
 
@@ -105,5 +110,14 @@ ISR(INT1_vect){
 		referencia = 50;
 		}else{
 		referencia-=10;
+	}
+}
+
+ISR(USART_RX_vect){
+
+	if (Usart_ReadLine(serial_buffer,serial_data_recieve)){
+		
+		referencia = (float)(atoi(serial_data_recieve));
+		
 	}
 }

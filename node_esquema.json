@@ -1,0 +1,303 @@
+[
+    {
+        "id": "0986a576bf6729fb",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "f2ead89047724c72",
+        "type": "serial out",
+        "z": "0986a576bf6729fb",
+        "name": "",
+        "serial": "376fcc2beacb23c7",
+        "x": 1150,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "c47a1daa1d0ad99a",
+        "type": "function",
+        "z": "0986a576bf6729fb",
+        "name": "Temperatura",
+        "func": "let x;\n\nx = msg.payload.split(\"-\");\nmsg.payload = x[0];\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 500,
+        "wires": [
+            [
+                "633aa6d6e37d2fce",
+                "c83b6e4d0bbc120c"
+            ]
+        ]
+    },
+    {
+        "id": "07fb9ea1a9e826db",
+        "type": "serial in",
+        "z": "0986a576bf6729fb",
+        "name": "",
+        "serial": "376fcc2beacb23c7",
+        "x": 470,
+        "y": 560,
+        "wires": [
+            [
+                "c47a1daa1d0ad99a",
+                "cecaf803ab544dd6",
+                "d9dec64b7ef8ea66"
+            ]
+        ]
+    },
+    {
+        "id": "cecaf803ab544dd6",
+        "type": "function",
+        "z": "0986a576bf6729fb",
+        "name": "Señal de Control",
+        "func": "let x;\n\nx = msg.payload.split(\"-\");\nmsg.payload = x[1];\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 580,
+        "wires": [
+            [
+                "d9a478b06479ae2e"
+            ]
+        ]
+    },
+    {
+        "id": "d9dec64b7ef8ea66",
+        "type": "function",
+        "z": "0986a576bf6729fb",
+        "name": "Referencia",
+        "func": "let x;\n\nx = msg.payload.split(\"-\");\nmsg.payload = x[2];\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 700,
+        "wires": [
+            [
+                "a8158e85d3f8b60f"
+            ]
+        ]
+    },
+    {
+        "id": "a8158e85d3f8b60f",
+        "type": "ui_text",
+        "z": "0986a576bf6729fb",
+        "group": "140910ead9cb6801",
+        "order": 2,
+        "width": "12",
+        "height": "2",
+        "name": "",
+        "label": "Referencia : ",
+        "format": "{{msg.payload}}",
+        "layout": "row-center",
+        "className": "",
+        "x": 870,
+        "y": 780,
+        "wires": [],
+        "info": "<style>\r\n    md-card.nr-dashboard-text {\r\n        font-size: 48px;\r\n        height: 100px;  \r\n    }\r\n</style>"
+    },
+    {
+        "id": "d9a478b06479ae2e",
+        "type": "ui_gauge",
+        "z": "0986a576bf6729fb",
+        "name": "",
+        "group": "1f9d7b09bc8bc9f9",
+        "order": 1,
+        "width": "12",
+        "height": "10",
+        "gtype": "gage",
+        "title": "Señal de control",
+        "label": "",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 920,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "633aa6d6e37d2fce",
+        "type": "ui_chart",
+        "z": "0986a576bf6729fb",
+        "name": "",
+        "group": "43b075c53ed65693",
+        "order": 0,
+        "width": "12",
+        "height": "10",
+        "label": "Temperatura ºC",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#efc90b",
+            "#46648b",
+            "#e3710c",
+            "#29a329",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 920,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9d39a8e6a46f33d6",
+        "type": "ui_slider",
+        "z": "0986a576bf6729fb",
+        "name": "",
+        "label": "SetPoint ",
+        "tooltip": "",
+        "group": "140910ead9cb6801",
+        "order": 1,
+        "width": "12",
+        "height": "8",
+        "passthru": true,
+        "outs": "end",
+        "topic": "topic",
+        "topicType": "msg",
+        "min": "50",
+        "max": "400",
+        "step": 1,
+        "className": "",
+        "x": 980,
+        "y": 880,
+        "wires": [
+            [
+                "f2ead89047724c72",
+                "2def8e638bb412ef"
+            ]
+        ]
+    },
+    {
+        "id": "c83b6e4d0bbc120c",
+        "type": "debug",
+        "z": "0986a576bf6729fb",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1230,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "2def8e638bb412ef",
+        "type": "debug",
+        "z": "0986a576bf6729fb",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1230,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "376fcc2beacb23c7",
+        "type": "serial-port",
+        "serialport": "COM1",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "\\n",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "140910ead9cb6801",
+        "type": "ui_group",
+        "name": "Dashboard2",
+        "tab": "b78d2816c88a550d",
+        "order": 3,
+        "disp": false,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "1f9d7b09bc8bc9f9",
+        "type": "ui_group",
+        "name": "Dashboard1",
+        "tab": "b78d2816c88a550d",
+        "order": 2,
+        "disp": false,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "43b075c53ed65693",
+        "type": "ui_group",
+        "name": "Dashboard",
+        "tab": "b78d2816c88a550d",
+        "order": 1,
+        "disp": false,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "b78d2816c88a550d",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

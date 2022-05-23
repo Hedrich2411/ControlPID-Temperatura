@@ -41,6 +41,8 @@ float Analogic_Read(uint8_t adc_channel){
 
 /////////////////////////////////////////////
 
+
+
 void Usart_Init(void){
 	
 	//Usart en modo asincrono->uart
@@ -76,6 +78,34 @@ void Usart_PutString(const char *str){
 	while(*str)
 	Usart_PutChar(*str++);
 }
+
+char Usart_Read_char(void){
+	
+	while(~UCSR0A & (1<<RXC0));
+	return UDR0;
+	
+}
+
+bool Usart_ReadLine(char *buffer, char *serial_recieve){
+	
+	char RxByte;
+	static int counter;
+
+	RxByte = Usart_Read_char();
+	
+	if(RxByte!='\n'){
+		buffer[counter++] = RxByte;
+		return false;
+		}else{
+		strcpy(serial_recieve,buffer);
+		memset(buffer,'\0',counter+1);
+		counter = 0;
+		return true;
+	}
+	
+}
+
+
 
 ////////////////////////////////////////////
 

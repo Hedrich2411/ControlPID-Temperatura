@@ -13,10 +13,18 @@
 #include <stdio.h>
 #include <avr/io.h>
 #include <util/delay.h>
+#include <stdbool.h>
+#include <string.h>
+#include <stdlib.h>
+
+
+/*********************************/
 
 void Usart_Init(void);
 void Usart_PutChar(char ch);
 void Usart_PutString(const char *str);
+char Usart_Read_char(void);
+bool Usart_ReadLine(char *buffer, char *serial_recieve);
 
 void ADC_init(void);
 float Analogic_Read(uint8_t adc_channel);
