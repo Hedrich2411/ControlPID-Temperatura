@@ -33,7 +33,7 @@ char setpoint_str[20];
 float temperatura = 0;
 float U = 0;
 
-//Temperatura de referencia(No colocar entre 50 y 400)
+//Temperatura de referencia(Colocar entre 50 y 400)
 float referencia = 400;
 
 
@@ -83,7 +83,7 @@ int main(void){
 //Tiempo de muestreo
 ISR(TIMER1_OVF_vect){
 	
-	//Calcula la señal de control
+	//Calcula la seÃ±al de control
 	U = CalculoControlPID(&PIDmotor,referencia,temperatura);
 	//Establece el PWM
 	PWM_set_duty((uint8_t)U);
